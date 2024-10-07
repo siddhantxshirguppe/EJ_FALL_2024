@@ -1,0 +1,350 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Gallery - Multiclass Density Maps </title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/solid.css" integrity="sha384-VGP9aw4WtGH/uPAOseYxZ+Vz/vaTb1ehm1bwx92Fm8dTrE+3boLfF1SpAtB1z7HW"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/brands.css" integrity="sha384-rf1bqOAj3+pw6NqYrtaE1/4Se2NBwkIfeYbsFdtiR6TQz0acWiwJbv1IM/Nt/ite"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/fontawesome.css" integrity="sha384-1rquJLNOM3ijoueaaeS5m+McXPJCGdr5HcA03/VHXxcp2kX2sUrQDmFc3jR5i/C7"
+        crossorigin="anonymous">
+
+    <style>
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1340px;
+            }
+        }
+
+        .card {
+            margin: 10px 0;
+        }
+
+        .card-body {
+            padding: 0.5rem;
+        }
+
+        .mdm {
+            text-align: center;
+        }
+
+        .map {
+            display: inline-block;
+        }
+
+        .legend {
+            display: inline-block;
+        }
+
+        pre {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #eee;
+        }
+
+        .checkbox-group {
+            display: flex;
+            background-color: lightblue;
+            gap: 10px;
+        }
+
+        .checkbox-group label {
+            margin: 0;
+        }
+
+        #render {
+            padding: 10px 20px;
+            background-color: #ff6f00;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px; /* Adjust the margin as per your design */
+        }
+
+        #render:hover {
+            background-color: #e65e00;
+        }
+   
+        /* Adjust the .container to handle the third box */
+        .container-vertical {
+            display: flex;
+            flex-direction: column; /* Stack flex items vertically */
+            align-items: center; /* Align items horizontally in the center */
+            gap: 10px;
+            padding: 10px; /* Add some padding around the container */
+        }
+        .container-horizontal {
+            display: flex;
+            flex-direction: row; /* Stack flex items vertically */
+            align-items: center; /* Align items horizontally in the center */
+            gap: 20px;
+            padding: 0px; /* Add some padding around the container */
+        }
+
+        .box {
+            width: 600px; /* Set a fixed width for all boxes */
+            /* Rest of the .box styles */
+        }
+
+        .text-input-group textarea {
+            width: 100%; /* Makes the textarea take the full width of its container */
+            height: 300px; /* Increased height to better accommodate longer text */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; /* Ensures padding does not affect the final dimensions */
+            background-color: #f9f9f9; /* Light background color */
+            resize: none; /* Prevent resizing */
+        }
+        .overlay-canvas {
+            position: absolute;
+            top: 60px;
+            left: 10px;
+            width: 1024px;
+            height: 930px;
+
+        }
+        .translucent-canvas {
+            
+            position: absolute;
+            top: 50px;
+            left: 0;
+        }
+
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href=".">
+                <img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt="Multiclass Density Map Logo">
+                Multiclass Environmental Justice tool
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+    <script src="sid_multiclass_density.js" type="module"></script>
+<div class="container-horizontal">
+
+
+    <div class="container-vertical">
+
+        <div class="box">
+            <label for="dataset1">Dataset 1</label>
+            <select id="dataset_01">
+                <option value="population">Population</option>
+                <option value="income">Income</option>
+                <option value="tri">TRI</option>
+                <!-- <option value="trisec">trisec</option> -->
+                <option value="race">race [STANDALONE]</option>
+                <option value="white">race-white</option>
+                <option value="black">race-black</option>
+                <option value="hispanic">race-hispanic</option>
+                <option value="asian">race-asian</option>
+                <option value="na" selected>NA</option>
+            </select>
+    
+            <label for="color1start" id="start_01_l">Color 1 Start</label>
+            <input type="color" id="colorset_01_s" name="color1start" value="#ffffff">
+    
+            <label for="color1end">End*</label>
+            <input type="color" id="colorset_01_e" name="color1end" value="#f20f07">
+        </div>
+    
+        <div class="box">
+            <label for="dataset2">Dataset 2</label>
+            <select id="dataset_02">
+                <option value="population">Population</option>
+                <option value="income">Income</option>
+                <option value="tri">TRI</option>
+                <!-- <option value="trisec">trisec</option> -->
+                <option value="na" selected>NA</option>
+            </select>
+    
+            <label for="color2start" id="start_02_l">Color 2 Start</label>
+            <input type="color" id="colorset_02_s" name="color2start" value="#ffffff">
+    
+            <label for="color2end" >End*</label>
+            <input type="color" id="colorset_02_e" name="color2end" value="#0066ff">
+        </div>
+
+        <div class="container-horizontal">
+
+            <div class="container-vertical">
+                <label for="Compose">Compose:</label>
+                <select id="compose" onchange="dropdownCB(this.value)">
+                    <option value="bars" >bars</option>
+                    <option value="punchcard" >punchcard</option>
+                    <option value="choropleth" selected>choropleth</option>
+                    <option value="time" >time (requires 2 variables)</option>
+                    <option value="propline" >propline (requires 2 variables)</option>
+                    <option value="hatching" >hatching (requires 2 variables)</option>
+                    <option value="weaving-random" >weaving-random (requires 2 variables)</option>
+                </select>
+
+                <label for="Overlay">Overlays:</label>
+                <select id="overlay">
+                    <option value="na" selected>NA</option>
+                    <option value="corridor" >industrial corridors</option>
+                    <option value="name" >community names</option>
+                    <option value="white_majority" >white majority</option>
+                    <option value="raw_numbers" >raw numbers</option>
+                </select>
+            </div>
+
+            <button id="render" onclick="renderSpec()">RENDER</button>
+            <div class="checkbox-group">
+                <input type="checkbox" id="norm_switch" name="normalize" checked>
+                <label for="normalize">NORMALIZE</label>
+            </div>   
+        </div>
+
+        <div class="box" id="scaleInfo" style="display: none;">
+            <div class="text-input-group">
+                <textarea id="infoText" name="infoText" readonly>
+            Scale Representation:
+            - TRI (Toxic Release Inventory) values are on a 1:1 scale.
+            - Population values are represented in multiples of 10,000.
+            - Income values are represented in multiples of 10,000.
+            - Race values are not normalized and represented in multiples of 1000.
+
+            Please interpret the chart data with these scales in mind.
+                </textarea>
+            </div>
+        </div>
+
+        <div class="box" id="normalizedInfo" >
+            <div class="text-input-group">
+                <textarea id="infoText" name="infoText" readonly>
+            Normalized Data Representation:
+            - TRI(Toxic Release Inventory): 
+                A minimum value of 0 represents 0%
+                A maximum value of 10 represents 100%.
+            - Income: 
+                A minimum value of $16,905.85 represents 0%,
+                A maximum value of $145,315.27 represents 100%.
+            - Population: 
+                A minimum value of 2,514 represents 0%
+                A maximum value of 103,048 represents 100%.
+            - Race: 
+                A minimum value of 0 represents 0%
+                A maximum value of 78,000 represents 100%.
+
+            Please interpret the chart data with these normalization in mind.
+                </textarea>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="container-horizontal">
+        <section id="gallery" class="row">
+        </section>
+    </div>
+
+    <div class="box" id="normalizedInfo">
+        <div class="text-input-group">
+            <textarea id="infoText" name="infoText" readonly>
+                Start end colors option currently not supported for race dataset
+                Non-normalized race data not yet supported.
+            </textarea>
+        </div>
+    </div>
+</div>
+
+    <script>
+        document.getElementById('norm_switch').addEventListener('change', function() {
+            console.log("checkbox sidbox called!!");
+            var scaleInfo = document.getElementById('scaleInfo');
+            var normalizedInfo = document.getElementById('normalizedInfo');
+        
+            if (this.checked) {
+                scaleInfo.style.display = 'none';
+                normalizedInfo.style.display = 'block';
+            } else {
+                scaleInfo.style.display = 'block';
+                normalizedInfo.style.display = 'none';
+            }
+        });
+    </script>
+
+    <script src="dist/multiclass-density-maps.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+        crossorigin="anonymous"></script>
+    <script>
+
+        $(function () {
+            var $gallery = $('#gallery')
+            //var $gallery_02 = $('#gallery_02');
+            var canvasCount = 0;
+
+            function SVG() {
+                return document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+            }
+
+            function render(gallery_num,title, spec, wide, width, height, timeN) {
+                console.log("sidlog render function called");
+                if(gallery_num === 1)
+                {
+                    $galleryElement = $('#gallery');
+                }else{
+                    $galleryElement = $('#gallery_02');
+                }
+                $galleryElement.find('.card').remove();
+                var
+                    $wrapper = $('<div></div>')./*attr('class', wide ? 'col-lg-12' : 'col-lg-4').*/appendTo($galleryElement),
+                    $card = $('<div class="card"></div>').appendTo($wrapper),
+                    $title = $('<h5 class="card-header"></h5>').html(title).appendTo($card),
+                    $body = $('<div class="card-body"></div>').appendTo($card),
+                    $mdm = $('<div class="mdm">').appendTo($body),
+
+                
+                    $canvas = $('<canvas>').appendTo($mdm).addClass('overlay-canvas').attr('id', 'corridor'),
+                    $desc = $('<p class="card-text">').html('').appendTo($body),
+                    $pre = $('<code>').css('display', 'none').appendTo($body),
+                    $code = $('<pre>').appendTo($pre).text(JSON.stringify(spec, null, 2)),
+                    $buttonGroup = $('<div class="btn-group w-100" role="group">').appendTo($body),
+                    $button = $('<button class="btn btn-dark w-75">').text('Toggle MDM Specification').appendTo($buttonGroup).css('visibility', 'hidden');
+                    //$editor = $('<a class="btn btn-primary w-25" target="_blank" role="button">').html('Edit <i class="fas fa-external-link-alt"></i>').appendTo($buttonGroup)
+                    ;
+                $button.click(function () {
+                    $pre.toggle();
+                })
+
+                //$editor.attr('href', 'https://jaeminjo.github.io/Multiclass-Density-Map-Editor/?spec=' + btoa(JSON.stringify(spec)))
+
+                var config = new MDM.Config(spec);
+                config.load('data').then(function () {
+                    var interp = new MDM.Interpreter(config);
+
+                    var start = +new Date();
+                    interp.interpret();
+                    interp.render($mdm.get(0));
+                    var end = +new Date();
+
+                    console.log(title, 'took ', (end - start), 'ms')
+                });
+            }
+            window.render = render;
+        })
+
+    </script>
+</body>
+
+</html>

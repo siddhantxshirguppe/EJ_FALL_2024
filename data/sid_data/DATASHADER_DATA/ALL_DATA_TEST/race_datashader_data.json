@@ -1,0 +1,108 @@
+{
+  "source": {
+    "filename": "sid_data/DATASHADER_DATA/ALL_DATA_TEST/race_datashader.csv",
+    "type": "csv",
+    "rows": 2749
+  },
+  "projection": {
+    "type": "EPSG:4326"
+  },
+  "encoding": {
+    "x": {
+      "field": "long",
+      "type": "latitude",
+      "bin": {
+        "maxbins": 1024
+      },
+      "aggregate": "count",
+      "scale": {
+        "domain": [
+          -87.9401140825235,
+          -87.52413710389523
+        ],
+        "range": [
+          0,
+          1024
+        ]
+      }
+    },
+    "y": {
+      "field": "lat",
+      "type": "longitude",
+      "bin": {
+        "maxbins": 930
+      },
+      "aggregate": "count",
+      "scale": {
+        "domain": [
+          41.644543121506054,
+          42.023038586147585
+        ],
+        "range": [
+          0,
+          930
+        ]
+      }
+    },
+    "z": {
+      "field": "class",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "asian",
+          "black",
+          "hispanic",
+          "other",
+          "white"
+        ]
+      }
+    }
+  },
+  "buffers": [
+    {
+      "url": "sid_data/DATASHADER_DATA/ALL_DATA_TEST/race_datashader_cat_asian.json",
+      "count": 177,
+      "value": "asian",
+      "range": [
+        0,
+        17
+      ]
+    },
+    {
+      "url": "sid_data/DATASHADER_DATA/ALL_DATA_TEST/race_datashader_cat_black.json",
+      "count": 800,
+      "value": "black",
+      "range": [
+        0,
+        73
+      ]
+    },
+    {
+      "url": "sid_data/DATASHADER_DATA/ALL_DATA_TEST/race_datashader_cat_hispanic.json",
+      "count": 789,
+      "value": "hispanic",
+      "range": [
+        0,
+        62
+      ]
+    },
+    {
+      "url": "sid_data/DATASHADER_DATA/ALL_DATA_TEST/race_datashader_cat_other.json",
+      "count": 73,
+      "value": "other",
+      "range": [
+        0,
+        4
+      ]
+    },
+    {
+      "url": "sid_data/DATASHADER_DATA/ALL_DATA_TEST/race_datashader_cat_white.json",
+      "count": 910,
+      "value": "white",
+      "range": [
+        0,
+        78
+      ]
+    }
+  ]
+}

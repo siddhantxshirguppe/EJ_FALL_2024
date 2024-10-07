@@ -1,0 +1,128 @@
+{
+  "source": {
+    "rows": 1123463,
+    "filename": "nyc_crime.csv",
+    "type": "csv"
+  },
+  "buffers": [
+    {
+      "url": "nyc_crime_cat_BURGLARY.json",
+      "range": [
+        0,
+        443
+      ],
+      "count": 191369,
+      "value": "BURGLARY"
+    },
+    {
+      "url": "nyc_crime_cat_GRAND LARCENY OF MOTOR VEHICLE.json",
+      "range": [
+        0,
+        196
+      ],
+      "count": 101963,
+      "value": "GRAND LARCENY OF MOTOR VEHICLE"
+    },
+    {
+      "url": "nyc_crime_cat_GRAND LARCENY.json",
+      "range": [
+        0,
+        2590
+      ],
+      "count": 428993,
+      "value": "GRAND LARCENY"
+    },
+    {
+      "url": "nyc_crime_cat_RAPE.json",
+      "range": [
+        0,
+        581
+      ],
+      "count": 13779,
+      "value": "RAPE"
+    },
+    {
+      "url": "nyc_crime_cat_FELONY ASSAULT.json",
+      "range": [
+        0,
+        1438
+      ],
+      "count": 184041,
+      "value": "FELONY ASSAULT"
+    },
+    {
+      "url": "nyc_crime_cat_MURDER & NON-NEGL. MANSLAUGHTE.json",
+      "range": [
+        0,
+        17
+      ],
+      "count": 4574,
+      "value": "MURDER & NON-NEGL. MANSLAUGHTE"
+    },
+    {
+      "url": "nyc_crime_cat_ROBBERY.json",
+      "range": [
+        0,
+        396
+      ],
+      "count": 198744,
+      "value": "ROBBERY"
+    }
+  ],
+  "encoding": {
+    "z": {
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "BURGLARY",
+          "GRAND LARCENY OF MOTOR VEHICLE",
+          "GRAND LARCENY",
+          "RAPE",
+          "FELONY ASSAULT",
+          "MURDER & NON-NEGL. MANSLAUGHTE",
+          "ROBBERY"
+        ]
+      },
+      "field": "Offense"
+    },
+    "y": {
+      "bin": {
+        "maxbins": 421
+      },
+      "type": "longitude",
+      "aggregate": "count",
+      "scale": {
+        "domain": [
+          40.49799608112919,
+          40.98971018966962
+        ],
+        "range": [
+          0,
+          421
+        ]
+      },
+      "field": "YCoordinate"
+    },
+    "x": {
+      "bin": {
+        "maxbins": 512
+      },
+      "type": "latitude",
+      "aggregate": "count",
+      "scale": {
+        "domain": [
+          -74.48270604450188,
+          -73.69958921931877
+        ],
+        "range": [
+          0,
+          512
+        ]
+      },
+      "field": "XCoordinate"
+    }
+  },
+  "projection": {
+    "type": "esri:102718"
+  }
+}

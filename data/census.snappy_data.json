@@ -1,0 +1,108 @@
+{
+  "projection": {
+    "type": "epsg:3857"
+  },
+  "buffers": [
+    {
+      "count": 13914371,
+      "value": "a",
+      "url": "census.snappy_cat_a.json",
+      "range": [
+        0,
+        245504
+      ]
+    },
+    {
+      "count": 50317503,
+      "value": "h",
+      "url": "census.snappy_cat_h.json",
+      "range": [
+        0,
+        721925
+      ]
+    },
+    {
+      "count": 8746248,
+      "value": "o",
+      "url": "census.snappy_cat_o.json",
+      "range": [
+        0,
+        36988
+      ]
+    },
+    {
+      "count": 37643995,
+      "value": "b",
+      "url": "census.snappy_cat_b.json",
+      "range": [
+        0,
+        535410
+      ]
+    },
+    {
+      "count": 196052887,
+      "value": "w",
+      "url": "census.snappy_cat_w.json",
+      "range": [
+        0,
+        662632
+      ]
+    }
+  ],
+  "encoding": {
+    "z": {
+      "type": "nominal",
+      "field": "race",
+      "scale": {
+        "domain": [
+          "a",
+          "h",
+          "o",
+          "b",
+          "w"
+        ]
+      }
+    },
+    "y": {
+      "aggregate": "count",
+      "type": "longitude",
+      "field": "northing",
+      "scale": {
+        "range": [
+          0,
+          280
+        ],
+        "domain": [
+          24.531359058253873,
+          49.35885267729129
+        ]
+      },
+      "bin": {
+        "maxbins": 280
+      }
+    },
+    "x": {
+      "aggregate": "count",
+      "type": "latitude",
+      "field": "easting",
+      "scale": {
+        "range": [
+          0,
+          512
+        ],
+        "domain": [
+          -124.72235455858674,
+          -66.95416451231523
+        ]
+      },
+      "bin": {
+        "maxbins": 512
+      }
+    }
+  },
+  "source": {
+    "filename": "census.snappy.parq",
+    "type": "parquet",
+    "rows": 306675004
+  }
+}

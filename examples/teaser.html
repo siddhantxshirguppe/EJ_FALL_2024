@@ -1,0 +1,252 @@
+<!doctype html>
+<html>
+    <head>
+        <title>A Declarative Rendering Model for Multiclass Density Maps</title>
+        <style>
+            canvas {border: 1px solid #ddd;}
+            body > div {float:left; margin:5px;}
+        </style>        
+    </head>
+    <body>
+        <script src="/dist/multiclass-density-maps.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/examples/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+
+render('',
+       {
+           "description": "multivariate normal data",
+           "data": {"url": "mn_data.json"},
+           "compose": {
+               "mix": "separate",
+               "order": [1, 3, 0, 2]
+           },
+           "rescale": {
+               "type": "linear"
+           },
+           "legend": false
+       });
+
+
+render('',
+       {
+           "description": "multivariate normal data",
+           "data": {"url": "mn_data.json"},
+           "compose": {
+               "mix": "mean",
+               "mixing": "additive"
+           },
+           "legend": false
+       });
+
+render('',
+       {
+           "description": "multivariate normal data",
+           "data": {"url": "mn_data.json"},
+           "compose": {
+               "mix": "max",
+               "mixing": "additive"
+           },
+           "rescale": {
+               "type": "linear"
+           },
+           "legend": false
+       });
+
+
+render('',
+       {
+           "description": "multivariate normal data",
+           "data": {"url": "mn_data.json"},
+           "compose": {
+               "mix": "weavingsquare",
+               "size": 8
+           },
+           "rescale": {
+               "type": "linear"
+           },
+           "legend": false
+       });
+
+render('',
+       {
+           "description": "multivariate normal data",
+           "data": {"url": "mn_data.json"},
+           "compose": {
+               "mix": "weavinghex",
+               "size": 8
+           },
+           "rescale": {
+               "type": "linear"
+           },
+           "legend": false
+       });
+
+// render('Linear Color Scale triangles',
+//        {
+//            "description": "multivariate normal data",
+//            "data": {"url": "mn_data.json"},
+//            "compose": {
+//                "mix": "weavingtri",
+//                "size": 8
+//            },
+//            "rescale": {
+//                "type": "linear"
+//            }
+//        });
+
+
+render('',
+       {
+           "description": "multivariate normal data",
+           "data": {"url": "mn_data.json"},
+           "compose": {
+               "mix": "weavingrandom",
+               "size": 6
+           },
+           "rescale": {
+               "type": "linear"
+           },
+           "legend": false
+       });
+
+render('',
+       {
+           "description": "multivariate normal data",
+           "data": {"url": "mn_data.json"},
+           "compose": {
+               "mix": "none",
+               "size": 8
+           },
+           "contour": { "stroke": 4},
+           "legend": false
+       }, true);
+
+render('',
+       {
+           "description": "multivariate normal data",
+           "data": {"url": "mn_data.json"},
+           "rebin": {
+               "type": "voronoi",
+               "size": 32,
+               "stroke": "white"
+           },
+           "compose": {
+               "mix": "max"
+           },
+           "legend": false
+       });
+
+render('',
+       {
+           "description": "multivariate normal data",
+           "data": {"url": "mn_data.json"},
+           "rebin": {
+               "type": "voronoi",
+               "size": 32,
+               "stroke": "white"
+           },
+           "compose": {
+               "mix": "hatching",
+               "size": 2,
+               "widthprop":1.5,
+               "colprop":false
+           },
+           "legend": false
+       });
+
+render('',
+       {
+           "description": "multivariate normal data",
+           "data": {"url": "mn_data.json"},
+           "rebin": {
+               "type": "voronoi",
+               "size": 32,
+               "stroke": "white"
+           },
+           "compose": {
+               "mix": "propline",
+               "size": 4,
+               "widthprop":"percent",
+               "colprop":true
+           },
+           "legend": false
+       });
+
+render('',
+       {
+           "description": "multivariate normal data",
+           "data": {"url": "mn_data.json"},
+           "rebin": {
+               "type": "voronoi",
+               "size": 32,
+               "stroke": "white"
+           },
+           "compose": {
+               "mix": "weavingsquare",
+               "size": 8
+           },
+           "legend": false
+       });
+
+render('',
+       {
+           "description": "multivariate normal data",
+           "data": {"url": "mn_data.json"},
+           "rebin": {
+               "type": "voronoi",
+               "size": 32,
+               "stroke": "grey"
+           },
+           "compose": {
+               "mix": "dotdensity",
+               "size": 2
+           },
+           "legend": false
+       });
+
+render('',
+       {
+           "description": "multivariate normal data",
+           "data": {"url": "mn_data.json"},
+           "rebin": {
+               "type": "voronoi",
+               "size": 32,
+               "stroke": "grey"
+           },
+           "compose": {
+               "mix": "glyph",
+               "glyphSpec": {
+                   "template": "bars",
+                   "width": 20,
+                   "height": 20
+               }
+           },
+           "legend": false
+          });
+
+render('',
+       {
+           "description": "multivariate normal data",
+           "data": {"url": "mn_data.json"},
+           "rebin": {
+               "type": "voronoi",
+               "size": 32,
+               "stroke": "grey"
+           },
+           "compose": {
+                "mix": "glyph",
+                "glyphSpec": {
+                    "template": "punchcard",
+                    "width": 20,
+                    "height": 20,
+                    "factor": 4
+                }
+            },
+           "legend": false
+          });
+
+
+</script>
+    </body>
+</html>

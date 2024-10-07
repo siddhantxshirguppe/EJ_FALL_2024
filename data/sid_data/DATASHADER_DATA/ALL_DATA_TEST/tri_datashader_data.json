@@ -1,0 +1,68 @@
+{
+  "source": {
+    "filename": "sid_data/DATASHADER_DATA/ALL_DATA_TEST/tri_datashader.csv",
+    "type": "csv",
+    "rows": 74
+  },
+  "projection": {
+    "type": "EPSG:4326"
+  },
+  "encoding": {
+    "x": {
+      "field": "long",
+      "type": "latitude",
+      "bin": {
+        "maxbins": 1024
+      },
+      "aggregate": "count",
+      "scale": {
+        "domain": [
+          -87.9401140825235,
+          -87.52413710389523
+        ],
+        "range": [
+          0,
+          1024
+        ]
+      }
+    },
+    "y": {
+      "field": "lat",
+      "type": "longitude",
+      "bin": {
+        "maxbins": 930
+      },
+      "aggregate": "count",
+      "scale": {
+        "domain": [
+          41.644543121506054,
+          42.023038586147585
+        ],
+        "range": [
+          0,
+          930
+        ]
+      }
+    },
+    "z": {
+      "field": "class",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "class_tri"
+        ]
+      }
+    }
+  },
+  "buffers": [
+    {
+      "url": "sid_data/DATASHADER_DATA/ALL_DATA_TEST/tri_datashader_cat_class_tri.json",
+      "count": 74,
+      "value": "class_tri",
+      "range": [
+        0,
+        10
+      ]
+    }
+  ]
+}

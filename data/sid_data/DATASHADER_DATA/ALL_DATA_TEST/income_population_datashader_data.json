@@ -1,0 +1,78 @@
+{
+  "source": {
+    "filename": "sid_data/DATASHADER_DATA/ALL_DATA_TEST/income_population_datashader.csv",
+    "type": "csv",
+    "rows": 846
+  },
+  "projection": {
+    "type": "EPSG:4326"
+  },
+  "encoding": {
+    "x": {
+      "field": "long",
+      "type": "latitude",
+      "bin": {
+        "maxbins": 1024
+      },
+      "aggregate": "count",
+      "scale": {
+        "domain": [
+          -87.9401140825235,
+          -87.52413710389523
+        ],
+        "range": [
+          0,
+          1024
+        ]
+      }
+    },
+    "y": {
+      "field": "lat",
+      "type": "longitude",
+      "bin": {
+        "maxbins": 930
+      },
+      "aggregate": "count",
+      "scale": {
+        "domain": [
+          41.644543121506054,
+          42.023038586147585
+        ],
+        "range": [
+          0,
+          930
+        ]
+      }
+    },
+    "z": {
+      "field": "class",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "class_income",
+          "class_population"
+        ]
+      }
+    }
+  },
+  "buffers": [
+    {
+      "url": "sid_data/DATASHADER_DATA/ALL_DATA_TEST/income_population_datashader_cat_class_income.json",
+      "count": 535,
+      "value": "class_income",
+      "range": [
+        0,
+        15
+      ]
+    },
+    {
+      "url": "sid_data/DATASHADER_DATA/ALL_DATA_TEST/income_population_datashader_cat_class_population.json",
+      "count": 311,
+      "value": "class_population",
+      "range": [
+        0,
+        11
+      ]
+    }
+  ]
+}

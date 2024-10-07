@@ -1,0 +1,85 @@
+{
+  "source": {
+    "filename": "flight.csv",
+    "type": "csv",
+    "rows": 190236
+  },
+  "encoding": {
+    "z": {
+      "type": "nominal",
+      "field": "OP_UNIQUE_CARRIER",
+      "scale": {
+        "domain": [
+          "DL",
+          "UA",
+          "AA"
+        ]
+      }
+    },
+    "y": {
+      "bin": {
+        "maxbins": 256
+      },
+      "type": "quantitative",
+      "field": "ARR_DELAY",
+      "scale": {
+        "range": [
+          0,
+          256
+        ],
+        "domain": [
+          -94.0,
+          2023.0
+        ]
+      },
+      "aggregate": "count"
+    },
+    "x": {
+      "bin": {
+        "maxbins": 256
+      },
+      "type": "quantitative",
+      "field": "DISTANCE",
+      "scale": {
+        "range": [
+          0,
+          256
+        ],
+        "domain": [
+          86.0,
+          4983.0
+        ]
+      },
+      "aggregate": "count"
+    }
+  },
+  "buffers": [
+    {
+      "count": 71254,
+      "range": [
+        0,
+        747
+      ],
+      "url": "flight_cat_DL.json",
+      "value": "DL"
+    },
+    {
+      "count": 45384,
+      "range": [
+        0,
+        559
+      ],
+      "url": "flight_cat_UA.json",
+      "value": "UA"
+    },
+    {
+      "count": 73598,
+      "range": [
+        0,
+        624
+      ],
+      "url": "flight_cat_AA.json",
+      "value": "AA"
+    }
+  ]
+}

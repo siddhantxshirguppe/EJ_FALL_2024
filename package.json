@@ -1,0 +1,74 @@
+{
+  "name": "multiclass-density-maps",
+  "version": "0.1.5",
+  "description": "",
+  "main": "dist/ts/index.js",
+  "types": "dist/ts/index.d.ts",
+  "dependencies": {
+    "brace-expansion": "^1.1.11",
+    "d3-array": "^1.2.1",
+    "d3-axis": "^1.0.8",
+    "d3-format": "^1.2.2",
+    "d3-polygon": "^1.0.3",
+    "d3-scale": "^2.0.0",
+    "d3-selection": "^1.3.0",
+    "d3-transition": "^1.1.1",
+    "d3-voronoi": "^1.1.2",
+    "multivariate-normal": "^0.1.1",
+    "pngjs3": "^3.5.1",
+    "proj4": "^2.4.4",
+    "random-seed": "^0.3.0",
+    "simplify-ts": "^1.0.1",
+    "tdigest": "^0.1.1",
+    "topojson-client": "^3.0.0",
+    "vega": "^4.2.0",
+    "vega-embed": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/d3-array": "^1.2.1",
+    "@types/d3-axis": "^1.0.9",
+    "@types/d3-contour": "^1.2.1",
+    "@types/d3-format": "^1.2.1",
+    "@types/d3-geo": "^1.10.0",
+    "@types/d3-polygon": "^1.0.5",
+    "@types/d3-scale": "^2.0.0",
+    "@types/d3-selection": "^1.3.0",
+    "@types/d3-transition": "^1.1.1",
+    "@types/d3-voronoi": "^1.1.7",
+    "@types/node": "^10.9.4",
+    "@types/proj4": "^2.3.4",
+    "@types/random-seed": "^0.3.3",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-es2016": "^6.24.1",
+    "eslint": "^4.19.1",
+    "ts-loader": "^3.5.0",
+    "typescript": "^2.8.1",
+    "webpack": "^3.11.0",
+    "webpack-bundle-analyzer": "^2.11.1",
+    "webpack-dev-server": "^2.11.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc",
+    "start": "webpack-dev-server --open",
+    "build": "tsc && webpack --config webpack.prod.js -p --progress --bail=false --noEmitOnError --skipLibCheck"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e-/Multiclass-Density-Maps.git"
+  },
+  "author": "Jaemin Jo, Frédéric Vernier, Pierre Dragicevic, Jean-Daniel Fekete",
+  "collaborators": [
+    "Jaemin Jo <jmjo@hcil.snu.ac.kr>",
+    "Frédéric Vernier <frederic.vernier@limsi.fr>",
+    "Pierre Dragicevic <Pierre.Dragicevic@inria.fr",
+    "Jean-Daniel Fekete <Jean-Daniel.Fekete@inria.fr"
+  ],
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/e-/Multiclass-Density-Maps/issues"
+  },
+  "homepage": "https://github.com/e-/Multiclass-Density-Maps#readme"
+}

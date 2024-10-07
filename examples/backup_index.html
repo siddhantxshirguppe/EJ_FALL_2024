@@ -1,0 +1,503 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Gallery - Multiclass Density Maps </title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/solid.css" integrity="sha384-VGP9aw4WtGH/uPAOseYxZ+Vz/vaTb1ehm1bwx92Fm8dTrE+3boLfF1SpAtB1z7HW"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/brands.css" integrity="sha384-rf1bqOAj3+pw6NqYrtaE1/4Se2NBwkIfeYbsFdtiR6TQz0acWiwJbv1IM/Nt/ite"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/fontawesome.css" integrity="sha384-1rquJLNOM3ijoueaaeS5m+McXPJCGdr5HcA03/VHXxcp2kX2sUrQDmFc3jR5i/C7"
+        crossorigin="anonymous">
+
+    <style>
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1340px;
+            }
+        }
+
+        .card {
+            margin: 10px 0;
+        }
+
+        .card-body {
+            padding: 0.5rem;
+        }
+
+        .mdm {
+            text-align: center;
+        }
+
+        .map {
+            display: inline-block;
+        }
+
+        .legend {
+            display: inline-block;
+        }
+
+        pre {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #eee;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href=".">
+                <img src="logo.png" width="30" height="30" class="d-inline-block align-top" alt="Multiclass Density Map Logo">
+                Multiclass Density Map Gallery
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="https://jaeminjo.github.io/Multiclass-Density-Map-Editor/" target="_blank">
+                            <i class="fas fa-edit"></i> Editor</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="https://ieeexplore.ieee.org/abstract/document/8440817/" target="_blank">
+                            <i class="fas fa-file"></i> Paper</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="https://github.com/e-/Multiclass-Density-Maps" target="_blank">
+                            <i class="fab fa-github"></i> Github</a>
+                    </li>
+
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container pt-4">
+        <section id="gallery" class="row">
+        </section>
+    </div>
+
+    <script src="dist/multiclass-density-maps.js" type="text/javascript" charset="utf-8"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+        crossorigin="anonymous"></script>
+    <script>
+
+        $(function () {
+            var $gallery = $('#gallery')
+            var canvasCount = 0;
+
+            function SVG() {
+                return document.createElementNS('http://www.w3.org/2000/svg', 'svg')
+            }
+
+            function render(title, spec, wide, width, height, timeN) {
+                var
+                    $wrapper = $('<div></div>').attr('class', wide ? 'col-lg-12' : 'col-lg-4').appendTo($gallery),
+                    $card = $('<div class="card"></div>').appendTo($wrapper),
+                    $title = $('<h5 class="card-header"></h5>').html(title).appendTo($card),
+                    $body = $('<div class="card-body"></div>').appendTo($card),
+                    $mdm = $('<div class="mdm">').appendTo($body),
+                    $desc = $('<p class="card-text">').html('').appendTo($body),
+                    $pre = $('<code>').css('display', 'none').appendTo($body),
+                    $code = $('<pre>').appendTo($pre).text(JSON.stringify(spec, null, 2)),
+                    $buttonGroup = $('<div class="btn-group w-100" role="group">').appendTo($body),
+                    $button = $('<button class="btn btn-light w-75">').text('Toggle MDM Specification').appendTo($buttonGroup),
+                    $editor = $('<a class="btn btn-primary w-25" target="_blank" role="button">').html('Edit <i class="fas fa-external-link-alt"></i>').appendTo($buttonGroup)
+                    ;
+
+
+                $button.click(function () {
+                    $pre.toggle();
+                })
+
+                $editor.attr('href', 'https://jaeminjo.github.io/Multiclass-Density-Map-Editor/?spec=' + btoa(JSON.stringify(spec)))
+
+                var config = new MDM.Config(spec);
+                config.load('data').then(function () {
+                    var interp = new MDM.Interpreter(config);
+
+                    var start = +new Date();
+                    interp.interpret();
+                    interp.render($mdm.get(0));
+                    var end = +new Date();
+
+                    console.log(title, 'took ', (end - start), 'ms')
+                });
+            }
+            window.render = render;
+
+        
+            render('Income Data', {
+                //"data": { "url": "census.snappy_data.json" },
+                "data": { "url": "sid_data/median_income_datashader_data.json" },
+                
+                "rebin": {
+                    "type": "topojson",
+                    "url": "sid_data/Communities-Chicago.topojson",
+                    "feature": "Communities-Chicago",
+                    "aggregation":"sum",
+                    "stroke":"black"
+                },
+                
+                "smooth": {"radius": 1},
+                "rescale": {"type": "linear"},
+                "compose": {
+                    "mix": "mean",
+                    "size": 20
+                },
+                "legend":{
+                    "title":"hello"
+                }
+            }, true);
+
+            render('Population Data', {
+                //"data": { "url": "census.snappy_data.json" },
+                "data": { "url": "sid_data/population_datashader_data.json" },
+                "style": {
+                    "classes": [
+                        {
+                            "name": "2",
+                            "alias": "Population",
+                            "color0": "White",
+                            "color1": "Red"
+                        }
+                    ],
+
+                },
+                "rebin": {
+                    "type": "topojson",
+                    "url": "sid_data/Communities-Chicago.topojson",
+                    "feature": "Communities-Chicago",
+                    "aggregation":"sum",
+                    "stroke":"black"
+                },
+                
+                "smooth": {"radius": 1},
+                "rescale": {"type": "linear"},
+                "compose": {
+                    "mix": "mean",
+                    "size": 20
+                },
+                "legend":{
+                    "title":"hello"
+                }
+            }, true);
+
+            render('Population VS Income Data', {
+                //"data": { "url": "census.snappy_data.json" },
+                "data": { "url": "sid_data/population_income_datashader_data.json" },
+
+                "rebin": {
+                    "type": "topojson",
+                    "url": "sid_data/Communities-Chicago.topojson",
+                    "feature": "Communities-Chicago",
+                    "aggregation":"sum",
+                    "stroke":"black"
+                },
+                
+                "smooth": {"radius": 1},
+                "rescale": {"type": "linear"},
+                "compose": {
+                    "mix": "mean",
+                    "size": 20
+                },
+                "legend":{
+                    "title":"hello"
+                }
+            }, true);
+
+            render('Population VS Income Data', {
+                //"data": { "url": "census.snappy_data.json" },
+                "data": { "url": "sid_data/population_income_datashader_data.json" },
+                "rebin": {
+                    "type": "topojson",
+                    "url": "sid_data/Communities-Chicago.topojson",
+                    "feature": "Communities-Chicago",
+                    "aggregation":"sum",
+                    "stroke":"black"
+                },
+                
+                "smooth": {"radius": 1},
+                "rescale": {"type": "linear"},
+                "compose": {
+                "mix": "glyph",
+                "glyphSpec": {
+                "template": "punchcard",
+                    "height":"25",
+                    "width":"25"
+                    }
+                },
+                "legend":{
+                    "title":"hello"
+                }
+            }, true);
+
+            render('TRI Sector Data', {
+                //"data": { "url": "census.snappy_data.json" },
+                "data": { "url": "sid_data/inChicagoTrifac_gdf_data.json" },
+                "rebin": {
+                    "type": "topojson",
+                    "url": "sid_data/Communities-Chicago.topojson",
+                    "feature": "Communities-Chicago",
+                    "aggregation":"sum",
+                    "stroke":"black"
+                },
+                "compose": {
+                    "mix": "time"
+                },
+                "rescale": {
+                    "type": "linear"
+                },
+            }, true);
+
+            render('Census Data', {
+                //"data": { "url": "census.snappy_data.json" },
+                "data": { "url": "sid_data/median_income_datashader_data.json" },
+                
+                "rebin": {
+                    "type": "topojson",
+                    "url": "sid_data/Communities-Chicago.topojson",
+                    "feature": "Communities-Chicago",
+                    "aggregation":"sum",
+                    "stroke": "blue"
+                },
+
+                "rescale": {"type": "linear"},
+                "compose": {
+                "mix": "glyph",
+                "glyphSpec": {
+                "template": "punchcard",
+                "color":"red"
+                }
+            }
+
+            }, true);
+
+            render('Census Data', {
+                //"data": { "url": "census.snappy_data.json" },
+                "data": { "url": "sid_data/median_income_datashader_data.json" },
+                "style": {
+                    "classes": [
+                        {
+                            "name": "1",
+                            "alias": "White",
+                            "color0": "White",
+                            "color1": "Red"
+                        }
+                    ],
+
+                },
+                "rebin": {
+                    "type": "topojson",
+                    "url": "sid_data/Communities-Chicago.topojson",
+                    "feature": "Communities-Chicago",
+                    "aggregation":"density",
+                    "stroke": {
+                    "type": "topojson",
+                    "url": "sid_data/Communities-Chicago.topojson",
+                    "feature": "Communities-Chicago",
+                    "color": "rgba(0, 0, 0, 0.3)"
+                },
+                },
+
+            "smooth": {"radius": 1},
+                "rescale": {"type": "linear"},
+                "compose": {
+                    "mix": "glyph",
+                    "glyphSpec": {
+                        "template": "punchcard",
+                        "height":"20",
+                        "width":"20"
+                    }
+                }
+            }, true);
+
+            /*
+            render('Census Data (Class Reordered and Renamed)', {
+                "data": {
+                    "url": "census.snappy_data.json"
+                },
+                "style": {
+                    "classes": [
+                        {
+                            "name": "w",
+                            "alias": "White",
+                            "color0": "White",
+                            "color1": "Blue"
+                        },
+                        {
+                            "name": "h",
+                            "alias": "Hispanic",
+                            "color0": "White",
+                            "color1": "Orange"
+                        },
+                        {
+                            "name": "a",
+                            "alias": "Asian",
+                            "color0": "White",
+                            "color1": "Red"
+                        },
+                        {
+                            "name": "b",
+                            "alias": "Black",
+                            "color0": "White",
+                            "color1": "Green"
+                        },
+                        {
+                            "name": "o",
+                            "alias": "Other",
+                            "color0": "White",
+                            "color1": "Brown"
+                        },
+                    ],
+                    "scale": {
+                        "type": "log"
+                    }
+                },
+                "assembly": {
+                    "mix": "mean",
+                }
+            }, true);
+
+            render('Census Data Smoothed', {
+                "data": { "url": "census.snappy_data.json" },
+                "smooth": { "radius": 1 },
+                "compose": {
+                    "mix": "mean"
+                },
+                "rescale": {
+                    "type": "log"
+                }
+            }, true);
+
+            render('Census Data Random Weaving', {
+                "description": "US Census Synthetic people",
+                "data": { "url": "census.snappy_data.json" },
+                "rebin": {
+                    "type": "topojson",
+                    "url": "us.json",
+                    "feature": "states",
+                    "stroke": "rgba(0,0,0,0.25)"
+                },
+                "compose": {
+                    "mix": "weaving",
+                    "shape": "random",
+                    "size": 4
+                },
+                "rescale": {
+                    "type": "cbrt"
+                }
+            }, true);
+
+            render('Census Data Weaving', {
+                "description": "US Census Synthetic people",
+                "data": { "url": "census.snappy_data.json" },
+                "rebin": {
+                    "type": "topojson",
+                    "url": "us.json",
+                    "feature": "states",
+                    "stroke": "red"
+
+                },
+                "compose": {
+                    "mix": "weaving",
+                    "shape": "square",
+                    "size": 4
+                },
+                "rescale": {
+                    "type": "cbrt"
+                }
+            }, true);
+
+
+            render('Census Data Choropleth', {
+                "description": "US Census Synthetic people",
+                "data": { "url": "census.snappy_data.json" },
+                "rebin": {
+                    "type": "topojson",
+                    "url": "us.json",
+                    "feature": "states",
+                    "stroke": "white"
+
+                },
+                "compose": {
+                    "mix": "mean",
+                    "size": 2
+                },
+                "rescale": {
+                    "type": "cbrt"
+                }
+            }, true);
+
+            render('Census Data Multiplicative Choropleth', {
+                "description": "US Census Synthetic people",
+                "data": { "url": "census.snappy_data.json" },
+                "rebin": {
+                    "type": "topojson",
+                    "url": "us.json",
+                    "feature": "counties",
+                    "stroke": "rgba(255,255,255,0.1)"
+
+                },
+                "compose": {
+                    "mix": "blend",
+                    "blending": "multiplicative"
+                },
+                "rescale": {
+                    "type": "log"
+                }
+            }, true);
+
+
+                        render('Census Data Contour', {
+                            "description": "US Census Synthetic people",
+                            "data": { "url": "census.snappy_data.json" },
+                            "reencoding": {
+                                "label": {
+                                    "field": "z",
+                                    "type": "nominal",
+                                    "scale": {
+                                        "domain": ["w", "h", "a", "b", "o"],
+                                        "range": ["White", "Hispanic", "Asian", "Black", "Other"]
+                                    }
+                                },
+                                "color": {
+                                    "field": "z",
+                                    "type": "nominal",
+                                    "scale": {
+                                        "range": ["Blue", "Orange", "Red", "Green", "Brown"]
+                                    }
+                                }
+                            },
+                            "rebin": {
+                                "type": "topojson",
+                                "url": "us.json",
+                                "feature": "states",
+                                "stroke": "grey"
+            
+                            },
+                            "rescale": {
+                                "type": "cbrt"
+                            },
+                            "contour": {
+                                "stroke": 5,
+                                "lineWidth": 1,
+                                "blur": 1
+                            }
+                        }, true);
+            */
+        })
+
+    </script>
+</body>
+
+</html>

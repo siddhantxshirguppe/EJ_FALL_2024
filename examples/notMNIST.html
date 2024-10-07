@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+    <head>
+        <title>A Declarative Rendering Model for Multiclass Density Maps</title>        
+    </head>
+    <body>
+        <script src="/dist/multiclass-density-maps.js" type="text/javascript" charset="utf-8"></script>
+        <script src="/examples/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+<script>
+
+render('notMNIST LargeVis',
+       {
+           "data": {"url": "notMNIST_xylab_data.json"},
+           "compose": {
+               "mix": "mean"
+           },
+           "rescale": {
+               "type": "log"
+           },
+           // "rebin": {
+           //     "type": "square",
+           //     "size": 4,
+           //     "aggregation": "mean"
+           // },
+           // "contour": {
+           //     "stroke": 4,
+           //     "blur": 3
+           // }
+       });
+
+render('notMNIST LargeVis',
+       {
+           "data": {"url": "notMNIST_xylab_data.json"},
+           "compose": {
+               "mix": "invmin"
+           },
+           "rescale": {
+               "type": "sqrt"
+           },
+           "rebin": {
+               "type": "square",
+               "size": 2,
+               "aggregation": "min"
+           }
+       });
+
+
+render('MNIST t-SNE',
+       {
+           "description": "multivariate normal data",
+           "data": {"url": "mnist_data.json"},
+           "compose": {
+               "mix": "mean"
+           },
+           "rescale": {
+               "type": "sqrt"
+           },
+           "rebin": {
+               "type": "square",
+               "size": 4,
+               "aggregation": "sum"
+           },
+           "contour": {
+               "stroke": 4,
+               "blur": 2
+           }
+       });
+
+render('MNIST t-SNE',
+       {
+           "description": "multivariate normal data",
+           "data": {"url": "mnist_data.json"},
+           "compose": {
+               "mix": "invmin"
+           },
+           "rescale": {
+               "type": "sqrt"
+           },
+           "rebin": {
+               "type": "square",
+               "size": 2,
+               "aggregation": "min"
+           }
+       });
+</script>
+    </body>
+</html>

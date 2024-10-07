@@ -1,5 +1,5 @@
 import DataBuffer from "./data-buffer";
-export declare type NumPair = [number, number];
+export type NumPair = [number, number];
 export interface SourceSpec {
     filename?: string;
     type?: string;
@@ -40,10 +40,10 @@ export interface DataBufferSpec {
 }
 export declare class GeoSpec {
     projection: string;
-    latitudes?: [number, number] | undefined;
-    longitudes?: [number, number] | undefined;
+    latitudes?: NumPair | undefined;
+    longitudes?: NumPair | undefined;
     proj4?: string | undefined;
-    constructor(projection?: string, latitudes?: [number, number] | undefined, longitudes?: [number, number] | undefined, proj4?: string | undefined);
+    constructor(projection?: string, latitudes?: NumPair | undefined, longitudes?: NumPair | undefined, proj4?: string | undefined);
 }
 export declare class SchemaSpec {
     spec: any;

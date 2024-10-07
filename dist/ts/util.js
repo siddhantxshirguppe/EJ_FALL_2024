@@ -1,20 +1,31 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-function positive(x) { return x > 0; }
+exports.largeRectInPoly = void 0;
 exports.positive = positive;
-function translate(x, y) { return `translate(${x}, ${y})`; }
 exports.translate = translate;
+exports.create2D = create2D;
+exports.linterp = linterp;
+exports.asum = asum;
+exports.amax = amax;
+exports.amin = amin;
+exports.arange = arange;
+exports.get = get;
+exports.deg2rad = deg2rad;
+exports.rad2deg = rad2deg;
+function positive(x) { return x > 0; }
+function translate(x, y) { return `translate(${x}, ${y})`; }
 function create2D(width, height, value) {
     let arr = new Array(height);
     for (let i = 0; i < height; ++i)
         arr[i] = new Array(width).fill(value);
     return arr;
 }
-exports.create2D = create2D;
 function linterp(v1, v2, t) {
     return v1 * (1 - t) + v2 * t;
 }
-exports.linterp = linterp;
 function asum(values) {
     let n = values.length;
     var i = -1, value, sum = NaN;
@@ -30,7 +41,6 @@ function asum(values) {
     }
     return sum;
 }
-exports.asum = asum;
 function amax(values) {
     let n = values.length;
     var i = -1, value, max = NaN;
@@ -46,7 +56,6 @@ function amax(values) {
     }
     return max;
 }
-exports.amax = amax;
 function amin(values) {
     let n = values.length;
     var i = -1, value, min = NaN;
@@ -62,7 +71,6 @@ function amin(values) {
     }
     return min;
 }
-exports.amin = amin;
 function arange(start, end, step) {
     var n = start;
     if (end == undefined) {
@@ -83,7 +91,6 @@ function arange(start, end, step) {
     }
     return array;
 }
-exports.arange = arange;
 let ongoing = {};
 let cache = {};
 function get(url, useCache = true, responseType) {
@@ -122,11 +129,8 @@ function get(url, useCache = true, responseType) {
         ongoing[url].push([resolve, reject]);
     });
 }
-exports.get = get;
 var largest_rect_in_poly_1 = require("./largest-rect-in-poly");
-exports.largeRectInPoly = largest_rect_in_poly_1.default;
+Object.defineProperty(exports, "largeRectInPoly", { enumerable: true, get: function () { return __importDefault(largest_rect_in_poly_1).default; } });
 function deg2rad(degrees) { return degrees * Math.PI / 180; }
-exports.deg2rad = deg2rad;
 function rad2deg(radians) { return radians * 180 / Math.PI; }
-exports.rad2deg = rad2deg;
 //# sourceMappingURL=util.js.map

@@ -62,7 +62,7 @@ export default class Path {
         this.closePath();
     }
 
-    send(canvas: CanvasPathMethods) {
+    send(canvas: CanvasRenderingContext2D) {
         var j = 0;
         for (let i = 0; i < this.codes.length; i++) {
             let c = this.codes[i];

@@ -2,6 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+
 let babelOptions = {
     "presets": [[
         "es2015",
@@ -34,12 +35,12 @@ module.exports = {
     resolve: {
         extensions: [".tsx", ".ts", ".js"]
     },
+
     plugins:[ 
+
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production')
-        }),
-        new webpack.optimize.UglifyJsPlugin({sourceMap: true, compress: true})        
-        //,new BundleAnalyzerPlugin()
+        })
     ],
     output: {
         filename: 'multiclass-density-maps.js',

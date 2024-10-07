@@ -74,7 +74,7 @@ export interface ColorScaleTrait {
 export declare class ColorScale implements ColorScaleTrait {
     colorRange: [Color, Color];
     interpolator: ScaleTrait;
-    outOfRangeColor: Color | undefined;
+    outOfRangeColor?: Color | undefined;
     constructor(colorRange: [Color, Color], interpolator: ScaleTrait, outOfRangeColor?: Color | undefined);
     map(value: number): Color;
 }

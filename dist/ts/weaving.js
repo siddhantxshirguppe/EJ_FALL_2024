@@ -3,6 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.squareMasks = squareMasks;
+exports.hexMasks = hexMasks;
+exports.triangleMasks = triangleMasks;
 const mask_1 = __importDefault(require("./mask"));
 function squareMasks(m, size, width, height, random, xincr = 1) {
     let masks = Array(m);
@@ -30,7 +33,6 @@ function squareMasks(m, size, width, height, random, xincr = 1) {
     }
     return masks;
 }
-exports.squareMasks = squareMasks;
 function hexMasks(m, size, width, height, random, xincr = 1) {
     let masks = Array(m);
     size = Math.floor(size);
@@ -77,7 +79,6 @@ function hexMasks(m, size, width, height, random, xincr = 1) {
     });
     return masks;
 }
-exports.hexMasks = hexMasks;
 function triangleMasks(m, size, width, height, random) {
     //TODO (jdf) fix to work with any m or throw exception when m is odd??
     let masks = Array(m);
@@ -121,5 +122,4 @@ function triangleMasks(m, size, width, height, random) {
     });
     return masks;
 }
-exports.triangleMasks = triangleMasks;
 //# sourceMappingURL=weaving.js.map

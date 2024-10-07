@@ -7,11 +7,11 @@
   "dependencies": {
     "brace-expansion": "^1.1.11",
     "d3-array": "^1.2.1",
-    "d3-axis": "^1.0.8",
+    "d3-axis": "^1.0.12",
     "d3-format": "^1.2.2",
     "d3-polygon": "^1.0.3",
-    "d3-scale": "^2.0.0",
-    "d3-selection": "^1.3.0",
+    "d3-scale": "^2.2.2",
+    "d3-selection": "^1.4.2",
     "d3-transition": "^1.1.1",
     "d3-voronoi": "^1.1.2",
     "multivariate-normal": "^0.1.1",
@@ -25,6 +25,7 @@
     "vega-embed": "^3.3.0"
   },
   "devDependencies": {
+    "@types/d3": "^7.4.3",
     "@types/d3-array": "^1.2.1",
     "@types/d3-axis": "^1.0.9",
     "@types/d3-contour": "^1.2.1",
@@ -35,16 +36,17 @@
     "@types/d3-selection": "^1.3.0",
     "@types/d3-transition": "^1.1.1",
     "@types/d3-voronoi": "^1.1.7",
-    "@types/node": "^10.9.4",
+    "@types/node": "^10.17.60",
     "@types/proj4": "^2.3.4",
     "@types/random-seed": "^0.3.3",
+    "@types/vega": "^3.2.0",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-es2016": "^6.24.1",
     "eslint": "^4.19.1",
     "ts-loader": "^3.5.0",
-    "typescript": "^2.8.1",
+    "typescript": "^5.6.2",
     "webpack": "^3.11.0",
     "webpack-bundle-analyzer": "^2.11.1",
     "webpack-dev-server": "^2.11.2"
@@ -53,7 +55,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "tsc": "tsc",
     "start": "webpack-dev-server --open",
-    "build": "tsc && webpack --config webpack.prod.js -p --progress --bail=false --noEmitOnError --skipLibCheck"
+    "build": "tsc && webpack --config webpack.prod.js  --progress"
   },
   "repository": {
     "type": "git",

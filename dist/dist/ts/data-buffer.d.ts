@@ -5,7 +5,7 @@ export default class DataBuffer {
     height: number;
     values: Float32Array[];
     constructor(name: string, width: number, height: number, values?: number[][]);
-    buffer(): ArrayBuffer;
+    buffer(): ArrayBufferLike;
     linearize(): number[];
     min(): number;
     max(): number;

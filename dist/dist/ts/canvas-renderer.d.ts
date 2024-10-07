@@ -2,7 +2,7 @@ import Image from './image';
 import Mask from './mask';
 export declare enum BlendingMode {
     Normal = 0,
-    Alpha = 1,
+    Alpha = 1
 }
 export default class CanvasRenderer {
     static BlendingMode: typeof BlendingMode;

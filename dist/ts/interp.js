@@ -1,10 +1,26 @@
 "use strict";
 // Interpreter from a parsed specification
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
     return result;
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
@@ -26,10 +42,37 @@ const Weaving = __importStar(require("./weaving"));
 const legend_1 = __importDefault(require("./legend"));
 const d3g = __importStar(require("d3-geo"));
 const d3s = __importStar(require("d3-selection"));
-const d3sc = __importStar(require("d3-scale"));
 const d3a = __importStar(require("d3-axis"));
 const util_1 = require("./util");
+function customScaleLinear(domain, range) {
+    // Ensure the domain array has exactly two elements, otherwise provide a default
+    const [dMin, dMax] = domain.length >= 2 ? domain : [0, 100]; // Fallback domain
+    const [rMin, rMax] = range;
+    const scale = ((value) => {
+        // Normalize the input value to a 0-1 range based on the domain
+        const t = (value - dMin) / (dMax - dMin);
+        // Scale the normalized value to the range
+        return rMin + t * (rMax - rMin);
+    });
+    // Add the domain, range, and copy methods
+    scale.domain = () => [dMin, dMax];
+    scale.range = () => [rMin, rMax];
+    scale.copy = () => customScaleLinear([dMin, dMax], [rMin, rMax]);
+    return scale;
+}
 class Interpreter {
+    log(...args) {
+        if (this.debug)
+            console.log.apply(console, args);
+    }
+    warn(...args) {
+        if (this.debug)
+            console.warn.apply(console, args);
+    }
+    error(...args) {
+        if (this.debug)
+            console.error.apply(console, args);
+    }
     constructor(config, debug = false) {
         this.config = config;
         this.debug = debug;
@@ -69,18 +112,6 @@ class Interpreter {
             this.contour = new Config.ContourSpec();
         else
             this.contour = config.contour;
-    }
-    log(...args) {
-        if (this.debug)
-            console.log.apply(console, args);
-    }
-    warn(...args) {
-        if (this.debug)
-            console.warn.apply(console, args);
-    }
-    error(...args) {
-        if (this.debug)
-            console.error.apply(console, args);
     }
     interpret() {
         // create class buffers first
@@ -564,7 +595,7 @@ class Interpreter {
             legend.style.display = "inline-block";
             legend.style.position = "relative";
             wrapper.appendChild(legend);
-            legend_1.default(legend, this);
+            (0, legend_1.default)(legend, this);
         }
         if (this.axis) {
             this.renderAxis(mapCanvas, axisSVG, forcedWidth, forcedHeight);
@@ -588,11 +619,21 @@ class Interpreter {
         svg
             .attr('width', width + margin.left + margin.right)
             .attr('height', height + margin.top + margin.bottom);
-        let xAxisG = svg.append('g').attr('transform', util_1.translate(margin.left, margin.top + height));
-        let x = d3sc.scaleLinear().domain(this.xdomain).range([0, width]);
+        let xAxisG = svg.append('g').attr('transform', (0, util_1.translate)(margin.left, margin.top + height));
+        //let x = d3sc.scaleLinear().domain(this.xdomain).range([0, width]);
+        //xAxisG.call(d3a.axisBottom(x));
+        let yAxisG = svg.append('g').attr('transform', (0, util_1.translate)(margin.left, margin.top));
+        //let y = d3sc.scaleLinear().domain(this.ydomain).range([0, height]);
+        //yAxisG.call(d3a.axisLeft(y));
+        const fallbackXDomain = [0, 100]; // Fallback domain for x-axis
+        const fallbackYDomain = [0, 100]; // Fallback domain for y-axis
+        let xDomain = (this.xdomain && this.xdomain.length >= 2) ? this.xdomain : fallbackXDomain;
+        let yDomain = (this.ydomain && this.ydomain.length >= 2) ? this.ydomain : fallbackYDomain;
+        //let x = d3sc.scaleLinear().domain(xDomain).range([0, width]);
+        //let y = d3sc.scaleLinear().domain(yDomain).range([0, height]);
+        let x = customScaleLinear(xDomain, [0, width]);
+        let y = customScaleLinear(yDomain, [0, height]);
         xAxisG.call(d3a.axisBottom(x));
-        let yAxisG = svg.append('g').attr('transform', util_1.translate(margin.left, margin.top));
-        let y = d3sc.scaleLinear().domain(this.ydomain).range([0, height]);
         yAxisG.call(d3a.axisLeft(y));
         let xTitle = this.schema.encoding.x.field;
         let yTitle = this.schema.encoding.y.field;
@@ -601,7 +642,7 @@ class Interpreter {
         if (this.axis.y && this.axis.y.title)
             yTitle = this.axis.y.title;
         svg.append('text')
-            .attr('transform', util_1.translate(width / 2 + margin.left, margin.top + height + margin.bottom))
+            .attr('transform', (0, util_1.translate)(width / 2 + margin.left, margin.top + height + margin.bottom))
             .style('font-size', '11px')
             .style('font-family', 'sans-serif')
             .attr('text-anchor', 'middle')
@@ -609,7 +650,7 @@ class Interpreter {
             .style('font-weight', 'bold')
             .text(xTitle);
         svg.append('text')
-            .attr("transform", util_1.translate(0, margin.top + height / 2) + "rotate(-90)")
+            .attr("transform", (0, util_1.translate)(0, margin.top + height / 2) + "rotate(-90)")
             .attr("dy", ".71em")
             .attr("y", "3px")
             .style('font-size', '11px')

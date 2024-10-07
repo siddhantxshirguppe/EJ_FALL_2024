@@ -1,15 +1,32 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
     return result;
 };
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = LegendBuilder;
 const d3s = __importStar(require("d3-selection"));
 const d3a = __importStar(require("d3-array"));
 const d3f = __importStar(require("d3-format"));
@@ -358,18 +375,13 @@ function bars(dest, interp) {
         };
     });
     let glyphSpec = interp.config.assembly.glyphSpec;
-    console.log("sidlog" + interp.d3scale);
     let barSpec = {
-        $schema: "https://vega.github.io/schema/vega-lite/v5.0.json",
+        $schema: "https://vega.github.io/schema/vega-lite/v2.0.json",
         data: {
             values: data
         },
         mark: {
             type: "bar"
-        },
-        "title": {
-            "text": "Class",
-            "anchor": "start" // optional, adjust as needed
         },
         encoding: {
             x: {
@@ -401,34 +413,29 @@ function bars(dest, interp) {
                 type: "quantitative",
                 scale: {
                     type: interp.d3scale,
-                    //base: interp.d3scale === "log" ? interp.d3base : undefined,
-                    //exponent: interp.d3scale === "pow" ? interp.d3exponent : undefined,
+                    base: interp.d3scale === "log" ? interp.d3base : undefined,
+                    exponent: interp.d3scale === "pow" ? interp.d3exponent : undefined,
                     domain: domain,
-                    range: [100, 0]
+                    range: [glyphSpec.height, 0]
                 },
-                "legend": true,
-                "axis": {
+                // legend: false,
+                axis: {
                     orient: "right",
-                    title: "test legend",
-                    format: ",.2s",
-                    ticks: true,
-                    tickCount: 10,
-                    labels: true,
-                    labelOverlap: true,
-                    "grid": true, "tickBand": "extent"
+                    title: false,
+                    format: ",.2s"
                 }
             }
         },
         config: {
             group: {
-                strokeWidth: 1
+                strokeWidth: 0
             }
         },
-        width: 100,
-        height: 100
+        width: glyphSpec.width,
+        height: glyphSpec.height
     };
     let wrapper = document.createElement('div');
-    return vega_embed_1.default(wrapper, barSpec, {
+    return (0, vega_embed_1.default)(wrapper, barSpec, {
         actions: false,
         renderer: 'svg'
     }).then(() => {
@@ -510,7 +517,7 @@ function punchcard(dest, interp) {
         padding: 5
     };
     let wrapper = document.createElement('div');
-    return vega_embed_1.default(wrapper, punchcardSpec, {
+    return (0, vega_embed_1.default)(wrapper, punchcardSpec, {
         actions: false,
         renderer: 'svg'
     }).then(() => {
@@ -537,5 +544,4 @@ function LegendBuilder(wrapper, interp) {
         mixLegend(wrapper, interp);
     }
 }
-exports.default = LegendBuilder;
 //# sourceMappingURL=legend.js.map

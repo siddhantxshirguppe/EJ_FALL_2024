@@ -13,5 +13,5 @@ export default class Path {
     arcTo(x1: number, y1: number, x2: number, y2: number, r: number): void;
     arc(x: number, y: number, r: number, a0: number, a1: number, ccw?: boolean): void;
     rect(x: number, y: number, w: number, h: number): void;
-    send(canvas: CanvasPathMethods): void;
+    send(canvas: CanvasRenderingContext2D): void;
 }

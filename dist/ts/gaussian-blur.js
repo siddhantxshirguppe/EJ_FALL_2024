@@ -1,6 +1,7 @@
 "use strict";
 // from http://blog.ivank.net/fastest-gaussian-blur.html
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = gaussian_blur;
 function boxesForGauss(sigma, n) {
     let wIdeal = Math.sqrt((12 * sigma * sigma / n) + 1); // Ideal averaging filter width
     var wl = Math.floor(wIdeal);
@@ -21,7 +22,6 @@ function gaussian_blur(scl, tcl, w, h, r) {
     boxBlur_4(tcl, scl, w, h, (bxs[1] - 1) / 2);
     boxBlur_4(scl, tcl, w, h, (bxs[2] - 1) / 2);
 }
-exports.default = gaussian_blur;
 function boxBlur_4(scl, tcl, w, h, r) {
     for (var i = 0; i < scl.length; i++)
         tcl[i] = scl[i];

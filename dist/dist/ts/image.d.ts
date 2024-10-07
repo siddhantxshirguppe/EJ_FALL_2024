@@ -12,9 +12,9 @@ export default class Image {
     render(color: Color, rect: Rect): void;
     render(canvas: HTMLCanvasElement, at: Point, options?: any): void;
     render(color: Color, tile: Tile, mask?: Mask): void;
-    private fillColorByTile(color, tile, mask?);
-    private checkOrCreate();
-    private drawTileAtPosition(canvas, point, options?);
-    private fillColorByRect(color, rect);
+    private fillColorByTile;
+    private checkOrCreate;
+    private drawTileAtPosition;
+    private fillColorByRect;
     fillMask(mask: Mask | undefined): void;
 }

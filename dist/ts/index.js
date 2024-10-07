@@ -1,15 +1,32 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Weaving = exports.VegaExtractor = exports.Util = exports.Tiling = exports.Tile = exports.Scale = exports.Rect = exports.Point = exports.Path = exports.Config = exports.Mask = exports.LegendBuilder = exports.Interpreter = exports.Image = exports.gaussian_blur = exports.ClassBuffer = exports.DataBuffer = exports.Assembly = exports.Color = exports.CanvasRender = void 0;
 const canvas_renderer_1 = __importDefault(require("./canvas-renderer"));
 exports.CanvasRender = canvas_renderer_1.default;
 const color_1 = __importDefault(require("./color"));
@@ -31,7 +48,7 @@ exports.LegendBuilder = legend_1.default;
 const mask_1 = __importDefault(require("./mask"));
 exports.Mask = mask_1.default;
 const config_1 = require("./config");
-exports.Config = config_1.Config;
+Object.defineProperty(exports, "Config", { enumerable: true, get: function () { return config_1.Config; } });
 const path_1 = __importDefault(require("./path"));
 exports.Path = path_1.default;
 const point_1 = __importDefault(require("./point"));

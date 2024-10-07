@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.EquiDepthColorScale = exports.CubicRootColorScale = exports.SquareRootColorScale = exports.LogColorScale = exports.LinearColorScale = exports.ColorScale = exports.EquiDepthScale = exports.CubicRootScale = exports.SquareRootScale = exports.RootScale = exports.LogScale = exports.LinearScale = void 0;
 const color_1 = __importDefault(require("./color"));
 const tdigest_1 = require("tdigest");
 const util_1 = require("./util");
@@ -12,8 +13,8 @@ class LinearScale {
         this.range = range;
         this.type = "linear";
         this.scale = (this.range[1] - this.range[0]) / (this.domain[1] - this.domain[0]);
-        this.min = util_1.amin(this.range);
-        this.max = util_1.amax(this.range);
+        this.min = (0, util_1.amin)(this.range);
+        this.max = (0, util_1.amax)(this.range);
     }
     clamp(value) {
         if (value < this.min)
@@ -29,7 +30,7 @@ class LinearScale {
         return ret;
     }
     invmap(value) {
-        let dmin = util_1.amin(this.domain), dmax = util_1.amax(this.domain);
+        let dmin = (0, util_1.amin)(this.domain), dmax = (0, util_1.amax)(this.domain);
         if (value <= this.min)
             return this.scale > 0 ? dmin : dmax;
         if (value >= this.max)
@@ -104,14 +105,14 @@ class EquiDepthScale {
     }
     addPoints(points) { this.digest.push(points.filter(util_1.positive)); }
     addPoint(point) {
-        if (util_1.positive(point))
+        if ((0, util_1.positive)(point))
             this.digest.push(point);
     }
     computeBounds() {
         this.digest.compress();
         let n = this.level; //-1;
         this.minBound = this.digest.percentile(0);
-        this.bounds = this.digest.percentile(util_1.arange(n).map(i => ((i + 1) / n)));
+        this.bounds = this.digest.percentile((0, util_1.arange)(n).map(i => ((i + 1) / n)));
     }
     getBounds() {
         if (this.bounds.length == 0) {

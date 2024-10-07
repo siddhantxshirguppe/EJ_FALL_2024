@@ -121,8 +121,8 @@ export default class Assembly {
                 x: {
                     field: "name",
                     type: "ordinal",
-                    "legend": null,
-                    "axis": null
+                    legend: false,
+                    axis: false
                 },
                 color: {
                     field: "name",
@@ -132,7 +132,7 @@ export default class Assembly {
                         range: data.map((d, i) => buffers[i].color1!.css())
                         // will use a fully opaque color, since we use the length encoding
                     },
-                    "legend": false
+                    legend: false
                 },
                 y: {
                     field: "value",
@@ -143,18 +143,17 @@ export default class Assembly {
                         base: options["y.scale.type"] === "log" ? options["y.scale.base"] : undefined,
                         exponent: options["y.scale.type"] === "pow" ? options["y.scale.exponent"] : undefined
                     },
-                    "legend": true,
-                    "axis": null
+                    lgend: false,
+                    axis: false
                 }
             },
-            
             config: {
                 group: {
                     strokeWidth: 0
                 }
             },
-            width: options.width || 60,
-            height: options.height || 60,
+            width: options.width || 30,
+            height: options.height || 30,
             padding: 0
         };
 
@@ -222,8 +221,8 @@ export default class Assembly {
                 x: {
                     field: "col",
                     type: "ordinal",
-                    "axis": null,
-                    "legend": null,
+                    axis: false,
+                    legend: false,
                     scale: {
                         type: "point",
                         domain: util.arange(cols),
@@ -233,8 +232,8 @@ export default class Assembly {
                 y: {
                     field: "row",
                     type: "ordinal",
-                    "axis": null,
-                    "legend": null,
+                    axis: false,
+                    legend: false,
                     scale: {
                         type: "point",
                         domain: util.arange(rows),
@@ -249,7 +248,7 @@ export default class Assembly {
                         type: options["z.scale.type"],
                         range: [0, Math.min(width, height) * factor]
                     },
-                    "legend": null,
+                    legend: false
                 },
                 color: {
                     field: "name",
@@ -258,15 +257,13 @@ export default class Assembly {
                         domain: names,
                         range: colors
                     },
-                    "legend": null,
-                },
-                tooltip: { content: "hello world" }
-
+                    legend: false
+                }
             },
             autosize: "none",
             config: {
                 mark: {
-                    opacity: 1.0
+                    opacity: 1
                 },
                 group: {
                     strokeWidth: 0,

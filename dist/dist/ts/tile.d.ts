@@ -6,7 +6,7 @@ export declare enum TileAggregation {
     Min = 0,
     Mean = 1,
     Sum = 2,
-    Max = 3,
+    Max = 3
 }
 export default class Tile extends Point {
     mask: Mask;

@@ -45,7 +45,7 @@ def csv_to_databuffers(filename, x, y, category, width=512, height=None,
     for i, cat in enumerate(values):
         df_cat = df.loc[cat_column == cat, [x, y]]
         (histo, xedges, yedges) = np.histogram2d(df_cat[x], df_cat[y],
-                                                 density=False,
+                                                 normed=False,
                                                  bins=bins, range=xy_range)
         if isinstance(bins, list):
             if (xedges != bins[0]).any():

@@ -20,6 +20,33 @@ import * as d3sc from 'd3-scale';
 import * as d3a from 'd3-axis';
 import { translate } from './util';
 
+type ScaleLinear = {
+    (value: number): number;
+    domain: () => [number, number];
+    range: () => [number, number];
+    copy: () => ScaleLinear;
+};
+
+function customScaleLinear(domain: number[], range: [number, number]): ScaleLinear {
+    // Ensure the domain array has exactly two elements, otherwise provide a default
+    const [dMin, dMax] = domain.length >= 2 ? domain : [0, 100];  // Fallback domain
+    const [rMin, rMax] = range;
+
+    const scale = ((value: number): number => {
+        // Normalize the input value to a 0-1 range based on the domain
+        const t = (value - dMin) / (dMax - dMin);
+        // Scale the normalized value to the range
+        return rMin + t * (rMax - rMin);
+    }) as ScaleLinear;
+
+    // Add the domain, range, and copy methods
+    scale.domain = () => [dMin, dMax];
+    scale.range = () => [rMin, rMax];
+    scale.copy = () => customScaleLinear([dMin, dMax], [rMin, rMax]);
+
+    return scale;
+}
+
 export default class Interpreter {
     public description?: string;
     public width: number;
@@ -327,6 +354,7 @@ export default class Interpreter {
             canvas.setAttribute("title", this.description);
     }
 
+    
     private renderMap(canvas: HTMLCanvasElement, wrapper: HTMLDivElement, width: number, height: number) {
         let assemblyConfig = this.config.assembly!;
         let promises = [];
@@ -686,6 +714,7 @@ export default class Interpreter {
         if (this.stroke) this.renderStroke(mapCanvas);
     }
 
+    
     private renderAxis(map: HTMLCanvasElement, native: SVGSVGElement, forcedWidth?: number, forcedHeight?: number) {
         let svg: any = d3s.select(native);
         let margin = {
@@ -707,12 +736,29 @@ export default class Interpreter {
             .attr('height', height + margin.top + margin.bottom);
 
         let xAxisG = svg.append('g').attr('transform', translate(margin.left, margin.top + height));
-        let x = d3sc.scaleLinear().domain(this.xdomain).range([0, width]);
-        xAxisG.call(d3a.axisBottom(x));
+        //let x = d3sc.scaleLinear().domain(this.xdomain).range([0, width]);
+        //xAxisG.call(d3a.axisBottom(x));
 
         let yAxisG = svg.append('g').attr('transform', translate(margin.left, margin.top));
-        let y = d3sc.scaleLinear().domain(this.ydomain).range([0, height]);
+        //let y = d3sc.scaleLinear().domain(this.ydomain).range([0, height]);
+        //yAxisG.call(d3a.axisLeft(y));
+
+
+        const fallbackXDomain = [0, 100];  // Fallback domain for x-axis
+        const fallbackYDomain = [0, 100];  // Fallback domain for y-axis
+
+        let xDomain = (this.xdomain && this.xdomain.length >= 2) ? this.xdomain : fallbackXDomain;
+        let yDomain = (this.ydomain && this.ydomain.length >= 2) ? this.ydomain : fallbackYDomain;
+
+        //let x = d3sc.scaleLinear().domain(xDomain).range([0, width]);
+        //let y = d3sc.scaleLinear().domain(yDomain).range([0, height]);
+
+        let x = customScaleLinear(xDomain, [0, width]);
+        let y = customScaleLinear(yDomain, [0, height]);
+
+        xAxisG.call(d3a.axisBottom(x));
         yAxisG.call(d3a.axisLeft(y));
+
 
         let xTitle = this.schema.encoding!.x.field;
         let yTitle = this.schema.encoding!.y.field;
